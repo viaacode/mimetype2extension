@@ -1,0 +1,64 @@
+#%RAML 0.8
+title: mimetype2extension
+version: 1.0.0
+/extension:
+  displayName: extension
+  description: Extension methods.
+  get:
+    description: Gets an extension based on a MIME Type.
+    queryParameters:
+      mimetype:
+        displayName: MIME Type
+        type: string
+        description: The MIME Type of the file
+        example: application/xml
+        required: true
+    responses:
+      200:
+        description: Successfully got the extension for a MIME Type
+        body:
+          application/json:
+            example: |
+              {
+                "status" : "success",
+                "data": {
+                  "mimetype": "application/xml",
+                  "extension": ".xml"
+                }
+              }
+      404:
+        description: The extension was not found.
+        body:
+          application/json:
+            example: |
+              {
+                "status": "fail",
+                "description": "MIME Type was not recognized",
+                "data": {
+                  "mimetype": "application/xml"
+                }
+              }
+      400:
+        description: The MIME Type was not filled in.
+        body:
+          application/json:
+            example: |
+              {
+                "status": "fail",
+                "description": "MIME Type was empty",
+                "data": {
+                  "mimetype": "application/xml"
+                }
+              }
+      500:
+        description: An internal server error occurred while trying to get the requested information.
+        body:
+          application/json:
+            example: |
+              {
+                "status": "error",
+                "description": "An error occurred while handling your request",
+                "data": {
+                  "mimetype": "application/xml"
+                }
+              }
